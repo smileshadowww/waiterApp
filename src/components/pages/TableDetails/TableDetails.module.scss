@@ -1,0 +1,28 @@
+// @import "~bootstrap/scss/bootstrap";
+
+.card {
+  display: flex;
+  align-content: center;
+}
+
+.tableId {
+  margin-left: 5px;
+  p {
+    font-size: 24px;
+  }
+}
+
+.status {
+  margin: auto 0;
+  text-align: center;
+  p {
+    font-size: 18px;
+    span {
+      font-weight: bold;
+    }
+  }
+}
+
+.button {
+  margin-right: 20px;
+}
