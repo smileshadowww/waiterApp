@@ -12,17 +12,40 @@ const UPDATE_TABLES = createActionName('UPDATE_TABLES');
 // action creators
 export const changeTable = payload => ({ type: 'CHANGE_TABLE', payload });
 export const updateTables = payload => ({ type: 'UPDATE_TABLES', payload });
+const url = 'http://localhost:3131/tables';
 export const fetchTables = dispach => {
   return(dispatch) => {
-    fetch('http://localhost:3131/api/tables')
+    fetch(url)
       .then(res => res.json())
       .then(tables => dispatch(updateTables(tables)));
   }
 }
+export const putTables = (tableUpdated) => {
+  return(dispatch) => {
+    const options = {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        id: tableUpdated.id,
+        status: tableUpdated.status,
+        peopleAmount: tableUpdated.peopleAmount,
+        maxPeopleAmount: tableUpdated.maxPeopleAmount,
+        bill: tableUpdated.bill
+      }),
+
+    };
+    console.log(tableUpdated);
+    fetch(url + '/' + tableUpdated.id, options)
+      .then(() => dispatch(changeTable(tableUpdated)))
+  }
+};
+
 const tablesReducer = (statePart = [], action) => {
   switch (action.type) {
-    // case 'CHANGE_TABLE':
-    //   return [...statePart, { ...action.payload, id: shortid() }];
+    case 'CHANGE_TABLE':
+      return [...statePart, { ...action.payload, id:action.payload.id }];
     case 'UPDATE_TABLES':
       return [...action.payload];
     default:
